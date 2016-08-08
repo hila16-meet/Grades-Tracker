@@ -33,9 +33,16 @@ def main_grades():
     command = input("What do you want to do? (add|show|quit): ")
     while command != 'quit':
         if command == 'add':
-            pass #TODO
+            g = int(input("Enter first grade: "))
+            all_grades = []
+            while g != -1:
+                all_grades.append(g)
+                g = int(input("Enter next grade: "))
+            save(all_grades, "/Users/hilaTal/somefile")
         elif command == 'show':
-            pass #TODO
+            print("The grades are: ", load("/Users/hilaTal/somefile"))
+            print("The average of all grades is: ", average(all_grades))
+            print("The most high grade is: ", max(all_grades), " and the lower is: ", min(all_grades))
         else:
             print('This is not a valid input!')
         command = input("What do you want to do? (add|show|quit): ")
