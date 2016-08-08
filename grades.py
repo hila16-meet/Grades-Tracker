@@ -1,10 +1,18 @@
-def average(all_grades):
+def average(grades_list):
+    assert len(grades_list) > 0
     sum_grades = 0
-    count = 0
-    for i in all_grades:
+    for i in grades_list:
         sum_grades = sum_grades + i
-        count += 1
-    return sum_grades / count
+    return sum_grades / len(grades_list)
+
+def show(grades_list):
+    if len(grades_list) == 0:
+        print('You have no grades.')
+    else:
+        print("The grades are: ", grades_list)
+        print("The average of all grades is: ", average(grades_list))
+        print("The highest grade is: ", max(grades_list), " and the lowest is: ", min(grades_list))
+
 
 def save(grades_list, filename):
     """ (list, str) -> none
@@ -30,22 +38,25 @@ def load(filename):
 
 def main_grades():
     all_grades = load('/Users/hilaTal/somefile')
-    command = input("What do you want to do? (add|show|quit): ")
+    command = input("What do you want to do? (add|show|quit|reset): ")
     while command != 'quit':
         if command == 'add':
-            g = int(input("Enter first grade: "))
-            all_grades = []
+            g = 0
             while g != -1:
-                all_grades.append(g)
-                g = int(input("Enter next grade: "))
-            save(all_grades, "/Users/hilaTal/somefile")
+                try:
+                    g = int(input("Enter next grade: "))
+                    if g != -1:
+                        all_grades.append(g)
+                except ValueError:
+                    print('Invalid input!')
+
         elif command == 'show':
-            print("The grades are: ", load("/Users/hilaTal/somefile"))
-            print("The average of all grades is: ", average(all_grades))
-            print("The most high grade is: ", max(all_grades), " and the lower is: ", min(all_grades))
+            show(all_grades)
+        elif command == 'reset':
+            all_grades = []
         else:
             print('This is not a valid input!')
-        command = input("What do you want to do? (add|show|quit): ")
+        command = input("What do you want to do? (add|show|quit|reset): ")
 
     save(all_grades, "/Users/hilaTal/somefile")
 
